@@ -27,4 +27,5 @@ todoSchema.pre('findOneAndUpdate', function(){
   this.update({}, { $set: { updated: Date.now() }})
 })
 
-export const Todo = mongoose.model('Todo', todoSchema);
+const Todo = mongoose.model('Todo', todoSchema);
+module.exports = Todo;
