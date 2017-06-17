@@ -1,0 +1,19 @@
+{
+  "name": "mongo_engine",
+  "version": "1.0.0",
+  "description": "mongo server for todo app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo",
+    "start": "node index.js"
+  },
+  "author": "rigoberto hernandez",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "bodymen": "^1.0.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.6"
+  }
+}
