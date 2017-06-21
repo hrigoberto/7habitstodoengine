@@ -31,9 +31,7 @@ router.get('/todos/:todoId', (req, res) => {
 });
 
 router.post('/todos', (req, res) => {
-  console.log('req.body', req.body);
   let todo = new Todo(req.body);
-  console.log(todo);
   todo.save(err => {
     if(err){
       return errHandler(err);
