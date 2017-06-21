@@ -2,66 +2,28 @@ const express = require('express');
 const router = express.Router();
 const Todo = require('../models/todo.js');
 
-const errHandler = (err) => {
-  return res.status(500).json({
-    msg: err
-  });
-}
+const errHandler = (err) => res.status(500).json({ msg: err });
+const successMsgHandler = (key = 'msg', value = 'success') => res.status(200).json({key, value});
 
 router.get('/todos', (req, res) => {
-  Todo.find({}, (err, todos) => {
-    if(err){
-      return errHandler(err);
-    }
-    return res.status(200).json({
-      todos: todos
-    });
-  });
+  Todo.find({}, (err, todos) => err ? errHandler : successMsgHandler('todos', todos));
 });
 
 router.get('/todos/:todoId', (req, res) => {
-  Todo.find({_id: req.params.todoId}, (err, todo) => {
-    if (err) {
-      return errHandler(err);
-    }
-    return res.status(200).json({
-      todo: todo
-    });
-  });
+  Todo.find({_id: req.params.todoId}, (err, todos) => err ? errHandler : successMsgHandler('todos', todos));
 });
 
 router.post('/todos', (req, res) => {
   let todo = new Todo(req.body);
-  todo.save(err => {
-    if(err){
-      return errHandler(err);
-    }
-    return res.status(200).json({
-      msg: 'Successfly created a todo'
-    });
-  });
+  todo.save(err => err ? errHandler : successMsgHandler());
 });
 
 router.put('/todos/:todoId', (req, res) => {
-  Todo.findOneAndUpdate({_id: req.params.todoId}, req.body, (err, todo) => {
-    if(err){
-      return errHandler(err);
-    }
-    return res.status(200).json({
-      msg: 'Successfully updated'
-    });
-  });
+  Todo.findOneAndUpdate({_id: req.params.todoId}, req.body, (err, todo) => err ? errHandler : successMsgHandler());
 });
 
 router.delete('/todos/:todoId', (req, res) => {
-  Todo.remove({_id: req.params.todoId}, err => {
-    if(err){
-      return errHandler(err);
-    }
-    return res.status(200).json({
-      msg: 'Successfully deleted'
-    })
-  })
+  Todo.remove({_id: req.params.todoId}, err => err ? errHandler : successMsgHandler());
 })
 
 module.exports = router;
